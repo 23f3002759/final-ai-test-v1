@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #282c34; /* Dark background */
+            color: #f0f0f0; /* Light text */
+            line-height: 1.6;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            background-color: #3a3f47; /* Slightly lighter dark background for container */
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            color: #61dafb; /* A nice accent color, common in tech themes */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #currentTime {
+            font-size: 6em; /* Very large time display */
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #f8f8f2; /* Almost white for the time itself */
+            background-color: #1e1e1e; /* Even darker background for the time display area */
+            padding: 25px 50px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+            min-width: 350px; /* Ensure consistent width for the time display */
+            display: inline-block; /* To respect min-width and padding */
+            transition: color 0.3s ease-in-out; /* Smooth color transition on update */
+        }
+
+        /* Basic responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            #currentTime {
+                font-size: 4em;
+                padding: 20px 40px;
+                min-width: 280px;
+                letter-spacing: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            #currentTime {
+                font-size: 3em;
+                padding: 15px 30px;
+                min-width: unset; /* Allow it to shrink more on small screens */
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Time</h1>
+        <div id="currentTime"></div>
+    </div>
+
+    <script>
+        /**
+         * Updates the displayed time every second.
+         */
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+
+            // Pad single-digit numbers with a leading zero
+            hours = String(hours).padStart(2, '0');
+            minutes = String(minutes).padStart(2, '0');
+            seconds = String(seconds).padStart(2, '0');
+
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            const timeDisplayElement = document.getElementById('currentTime');
+            
+            // Update the text content
+            if (timeDisplayElement.textContent !== timeString) {
+                timeDisplayElement.textContent = timeString;
+            }
+        }
+
+        // Call updateTime immediately to display the time without a one-second delay
+        updateTime();
+
+        // Set up an interval to call updateTime every 1000 milliseconds (1 second)
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
